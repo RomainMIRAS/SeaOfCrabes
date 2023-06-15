@@ -113,15 +113,16 @@ Player2(Init){
   | Key(d) ? Move(E) :(Init)
 }
 
-RedCross (Init){
- * (Init) :
- | ! GotPower ? Egg : ()
+RedCross(Init){
+ * (Init):
+ | !GotPower ? Egg :()
  | True ? : (Init)
  * ()
- 
- Treasure(Init){
- * (Init) : 
- | Cell(H,T) ? Egg : ()
- | True ? : (Init)
+}
+
+Treasure(Init){
+ * (Init):
+ | Cell(H,T) ? Egg :()
+ | True ? :(Init)
  * ()
 }

@@ -9,6 +9,7 @@ import automate.ActionClass.Cell;
 import automate.ActionClass.Egg;
 import automate.ActionClass.Explode;
 import automate.ActionClass.Get;
+import automate.ActionClass.GotPower;
 import automate.ActionClass.Hit;
 import automate.ActionClass.Jump;
 import automate.ActionClass.KeyFunc;
@@ -141,6 +142,8 @@ public class Visitor implements IVisitor{
 			return new Cell(l);
 		else if(funcall.name.equals("True"))
 			return new True();
+		else if(funcall.name.equals("GotPower")) 
+			return new GotPower();
 		else {
 			return null;
 		}
