@@ -62,13 +62,6 @@ Bonus(Init){
  | True ? : (Init)
  * ()
 }
-
-
-RedCross (Init){
- * (Init) :
- | ! GotPower ? Egg : ()
- | True ? : (Init)
- * ()
  
  
 Treasure(Init){
