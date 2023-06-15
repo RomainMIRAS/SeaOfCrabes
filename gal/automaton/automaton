@@ -63,6 +63,14 @@ Bonus(Init){
  * ()
 }
 
+
+RedCross (Init){
+ * (Init) :
+ | ! GotPower ? Egg : ()
+ | True ? : (Init)
+ * ()
+ 
+ 
 Treasure(Init){
  * (Init) : 
  | Cell(H,T) ? Egg : ()
