@@ -59,6 +59,10 @@ public class CrabLair extends StillEntity{
 	
 	}
 	
+	public ArrayList<Crab> getCrabs (){
+		return this.crabs;
+	}
+	
 	
 
 }
