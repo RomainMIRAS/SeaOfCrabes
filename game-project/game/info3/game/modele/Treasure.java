@@ -4,10 +4,10 @@ public class Treasure extends StillEntity {
 	
 	//Type Object à modifier lorsque la classe bonus/malus sera crée
 	 
-	protected Object bonus;
-	protected Object malus; 
+	protected Bonus bonus;
+	protected Bonus malus; 
 
-	public Treasure(Object bonus, Object malus) {
+	public Treasure(Bonus bonus, Bonus malus) {
 		super();
 		this.bonus = bonus;
 		this.malus = malus;
@@ -34,12 +34,26 @@ public class Treasure extends StillEntity {
 
 	}
 
-	public Object getBonus() {
+	public Bonus getBonus() {
 		return this.bonus;
 	}
 
-	public Object getMalus() {
+	public Bonus getMalus() {
 		return this.malus;
 	}
+	
+	public void setBonus(Bonus bonus) {
+		this.bonus = bonus;
+	}
+	
+	public void setMalus (Bonus malus) {
+		this.malus = malus;
+	}
+	
+	public Bonus Egg () {
+	
+	}
+	
+	
 
 }

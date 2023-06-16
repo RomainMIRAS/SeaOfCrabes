@@ -12,7 +12,7 @@ public class GotPower extends FunCall {
 
 	@Override
 	public boolean eval(Entity e) {
-		return ((MoveableEntity)e).gotPower();
+		return (e).gotPower();
 	}
 
 	@Override

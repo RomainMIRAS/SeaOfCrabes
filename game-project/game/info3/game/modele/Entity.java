@@ -62,6 +62,8 @@ public abstract class Entity {
 		this.automate.step(this, current_state);
 	}
 	
+	public abstract boolean gotPower();
+	
 	public boolean checkCollision(EnumDirection direction, int speed) {
 		int X = x;
 		int Y = y;

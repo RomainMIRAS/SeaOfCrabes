@@ -1,9 +1,9 @@
 package info3.game.modele;
 
+import info3.game.modele.bonus.AttackSpeedbonus;
 import info3.game.modele.map.MapSection;
 
 public class RedCross extends StillEntity {
-	protected Treasure treasure;
 	private MapSection section;
 
 	public RedCross(MapSection section) {
@@ -28,5 +28,21 @@ public class RedCross extends StillEntity {
 	public void interact() {
 		// TODO
 	}
-
+	
+	
+	@Override
+	public boolean gotPower() {
+		// TODO Auto-generated method stub
+		return super.gotPower();
+	}
+	
+	public  Treasure Egg () {
+		
+		AttackSpeedbonus bonus = new AttackSpeedbonus(1);
+		AttackSpeedbonus malus = new AttackSpeedbonus (1);
+		Treasure treasure = new Treasure (bonus,malus);
+		treasure.setX(this.getX());
+		treasure.setY(this.getY());
+		return treasure;
+	}
 }
