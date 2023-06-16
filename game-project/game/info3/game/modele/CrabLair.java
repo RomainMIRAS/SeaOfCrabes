@@ -29,7 +29,7 @@ public class CrabLair extends StillEntity{
 		//entity doesn't move
 	}
 
-	@Override
+	@OverridecrabsLvl
 	public void die() {
 		this.nbCrabs = 0;
 		isDead = true;
@@ -63,6 +63,14 @@ public class CrabLair extends StillEntity{
 		return this.crabs;
 	}
 	
+	public void CrabsDead (Crab crab) {
+		this.crabs.remove(crab);
+		this.nbCrabs --;
+	}
+	
+	public int getNbCrabs() {
+		return this.nbCrabs;
+	}
 	
 
 }
