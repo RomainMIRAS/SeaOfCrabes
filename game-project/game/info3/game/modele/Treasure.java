@@ -50,8 +50,9 @@ public class Treasure extends StillEntity {
 		this.malus = malus;
 	}
 	
-	public Bonus Egg () {
 	
+	public void Egg () {	
+		
 	}
 	
 	

@@ -60,9 +60,13 @@ public class Crab extends Ennemy {
 		return this.crabLair;
 	}
 	
+	@Override
 	public void die() {
 		this.crabLair.getCrabs().remove(this);
+		GameModele.entities.remove(this);
+		
 	}
+	
 	
 	
 

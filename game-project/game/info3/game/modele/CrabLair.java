@@ -29,10 +29,11 @@ public class CrabLair extends StillEntity{
 		//entity doesn't move
 	}
 
-	@OverridecrabsLvl
+	@Override
 	public void die() {
 		this.nbCrabs = 0;
 		isDead = true;
+		GameModele.entities.remove(this);
 	}
 	
 	public  boolean closest() {

@@ -17,10 +17,8 @@ public class RedCross extends StillEntity {
 
 	}
 
-	@Override
 	public void die() {
 		// TODO Auto-generated method stub
-
 	}
 	/*
 	 * Si le joueur touche la croix, elle disparait et laisse place à son trésor
@@ -32,8 +30,7 @@ public class RedCross extends StillEntity {
 	
 	@Override
 	public boolean gotPower() {
-		// TODO Auto-generated method stub
-		return super.gotPower();
+		return this.section.getCrabLair().getNbCrabs() != 0;
 	}
 	
 	public  Treasure Egg () {
