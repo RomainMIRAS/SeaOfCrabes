@@ -21,21 +21,19 @@ public class SoundTool {
 
 	public final static String pathSE = "assets/audio/se/";
 
-	private static HashMap<BackgroundMusic, String> backgroundSounds;
+	private static HashMap<BackgroundMusic, Clip> backgroundSounds;
 	private static HashMap<SoundEffect, String> soundEffects;
-	
+
 	private static Clip soundEffectPlayer;
-
-	private static Clip backgroundMusicPlayer;
-
+	
 	/**
 	 * Change la musique actuel du background
 	 * 
 	 * @param bgs
 	 */
 	public static void changeBackgroundMusic(BackgroundMusic bgs) {
+		backgroundSounds.get(currenBackgroundSound).stop();
 		SoundTool.currenBackgroundSound = bgs;
-		backgroundMusicPlayer.close();
 		playBackgroundMusic();
 	}
 
@@ -67,21 +65,12 @@ public class SoundTool {
 	 * changeBackgroundMusic() pour changer la musique
 	 */
 	public static void playBackgroundMusic() {
-		String filename = pathBGM + backgroundSounds.get(currenBackgroundSound);
-		try {
-			RandomAccessFile file = new RandomAccessFile(filename, "r");
-			RandomFileInputStream fis = new RandomFileInputStream(file);
-			AudioInputStream audioIn = AudioSystem.getAudioInputStream(fis);
-			backgroundMusicPlayer.open(audioIn);
-			backgroundMusicPlayer.loop(Clip.LOOP_CONTINUOUSLY);
-		} catch (Throwable th) {
-			th.printStackTrace(System.err);
-			System.exit(-1);
-		}
+			backgroundSounds.get(currenBackgroundSound).loop(Clip.LOOP_CONTINUOUSLY);
+
 	}
 
 	public static BackgroundMusic stopBackgroundMusic() {
-		backgroundMusicPlayer.stop();
+		backgroundSounds.get(currenBackgroundSound).stop();
 		return currenBackgroundSound;
 	}
 
@@ -104,11 +93,10 @@ public class SoundTool {
 		 * 
 		 */
 		backgroundSounds = new HashMap<>();
-		SoundTool.backgroundSounds.put(BackgroundMusic.Game, "Town1.wav");
-		SoundTool.backgroundSounds.put(BackgroundMusic.MainMenu, "Town8.wav");
+		loadBackgroundMusic(BackgroundMusic.Game, "Town1.wav");
+		loadBackgroundMusic(BackgroundMusic.MainMenu, "Town8.wav");
 		
 		try {
-			backgroundMusicPlayer = AudioSystem.getClip();
 			soundEffectPlayer = AudioSystem.getClip();
 			playBackgroundMusic();
 		} catch (LineUnavailableException e) {
@@ -117,6 +105,20 @@ public class SoundTool {
 		}
 		
 		 
+	}
+	
+	private static void loadBackgroundMusic(BackgroundMusic bgm, String path) {
+		try {
+		RandomAccessFile file = new RandomAccessFile(pathBGM+path, "r");
+		RandomFileInputStream fis = new RandomFileInputStream(file);
+		AudioInputStream audioIn = AudioSystem.getAudioInputStream(fis);
+		Clip newClip = AudioSystem.getClip();
+		newClip.open(audioIn);
+		backgroundSounds.put(bgm, newClip);
+		} catch (Throwable th) {
+			th.printStackTrace(System.err);
+			System.exit(-1);
+		}
 	}
 	
 //   public static void replay() {
