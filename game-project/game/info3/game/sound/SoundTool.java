@@ -4,18 +4,29 @@ import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 import java.util.HashMap;
 
-import info3.game.graphics.GameCanvas;
-
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+/**
+ * The supported file formats are: "wav", "au" and "aiff". The samples can be either 8-bit or 16-bit, with sampling rate from 8 kHz to 48 kHz.
+ * @author MIRAS Romain
+ *
+ */
 public class SoundTool {
-
-	static GameCanvas canvas;
 
 	static BackgroundMusic currenBackgroundSound = BackgroundMusic.MainMenu;
 
-	public final static String path = "assets/audio/";
+	public final static String pathBGM = "assets/audio/bgm/";
+
+	public final static String pathSE = "assets/audio/se/";
 
 	private static HashMap<BackgroundMusic, String> backgroundSounds;
 	private static HashMap<SoundEffect, String> soundEffects;
+	
+	private static Clip soundEffectPlayer;
+
+	private static Clip backgroundMusicPlayer;
 
 	/**
 	 * Change la musique actuel du background
@@ -24,6 +35,7 @@ public class SoundTool {
 	 */
 	public static void changeBackgroundMusic(BackgroundMusic bgs) {
 		SoundTool.currenBackgroundSound = bgs;
+		backgroundMusicPlayer.close();
 		playBackgroundMusic();
 	}
 
@@ -36,11 +48,14 @@ public class SoundTool {
 	 * @throws FileNotFoundException
 	 */
 	public static void playSoundEffect(SoundEffect se, long duration) throws FileNotFoundException {
-		String filename = path + "se/" + soundEffects.get(se);
+		String filename = pathSE + soundEffects.get(se);
 		try {
 			RandomAccessFile file = new RandomAccessFile(filename, "r");
 			RandomFileInputStream fis = new RandomFileInputStream(file);
-			canvas.playSound(filename, fis, duration, 1f);
+			AudioInputStream audioIn = AudioSystem.getAudioInputStream(fis);
+			soundEffectPlayer.open(audioIn);
+			soundEffectPlayer.start();
+			soundEffectPlayer.close();
 		} catch (Throwable th) {
 			th.printStackTrace(System.err);
 			System.exit(-1);
@@ -52,11 +67,13 @@ public class SoundTool {
 	 * changeBackgroundMusic() pour changer la musique
 	 */
 	public static void playBackgroundMusic() {
-		String filename = path + "bgm/" + backgroundSounds.get(currenBackgroundSound);
+		String filename = pathBGM + backgroundSounds.get(currenBackgroundSound);
 		try {
 			RandomAccessFile file = new RandomAccessFile(filename, "r");
 			RandomFileInputStream fis = new RandomFileInputStream(file);
-			canvas.playMusic(fis, 0, 1f);
+			AudioInputStream audioIn = AudioSystem.getAudioInputStream(fis);
+			backgroundMusicPlayer.open(audioIn);
+			backgroundMusicPlayer.loop(Clip.LOOP_CONTINUOUSLY);
 		} catch (Throwable th) {
 			th.printStackTrace(System.err);
 			System.exit(-1);
@@ -64,55 +81,51 @@ public class SoundTool {
 	}
 
 	public static BackgroundMusic stopBackgroundMusic() {
-		String m = null;
-		switch (currenBackgroundSound) {
-		case MainMenu:
-			m = "Town8.ogg";
-			break;
-		case Game:
-			m = "Town1.ogg";
-			break;
-		default:
-		}
-		canvas.stopMusic(path + m);
+		backgroundMusicPlayer.stop();
 		return currenBackgroundSound;
 	}
 
 	/**
 	 * Fonction permettant d'initialiser les sons d'avances.
-	 * 
-	 * @param canvas
+	 * The supported file formats are: "wav", "au" and "aiff". The samples can be either 8-bit or 16-bit, with sampling rate from 8 kHz to 48 kHz.
 	 */
-	public static void initSoundTool(GameCanvas canvas) {
-		SoundTool.canvas = canvas;
-
+	public static void initSoundTool() {
 		/********
 		 * 
 		 * HASHMAP DES EFFECTS SONORES
 		 * 
 		 */
 		soundEffects = new HashMap<>();
-		SoundTool.soundEffects.put(SoundEffect.Test, "Sword4.ogg");
-
+		SoundTool.soundEffects.put(SoundEffect.Test, "Sword4.ogg"); 
+		SoundTool.soundEffects.put(SoundEffect.PirateBoatAttack, "PirateBoatAttack.wav");
 		/********
 		 * 
 		 * HASHMAP DES SONS DE FONDS
 		 * 
 		 */
 		backgroundSounds = new HashMap<>();
-		SoundTool.backgroundSounds.put(BackgroundMusic.Game, "Town1.ogg");
-		SoundTool.backgroundSounds.put(BackgroundMusic.MainMenu, "Town8.ogg");
+		SoundTool.backgroundSounds.put(BackgroundMusic.Game, "Town1.wav");
+		SoundTool.backgroundSounds.put(BackgroundMusic.MainMenu, "Town8.wav");
+		
+		try {
+			backgroundMusicPlayer = AudioSystem.getClip();
+			soundEffectPlayer = AudioSystem.getClip();
+			playBackgroundMusic();
+		} catch (LineUnavailableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		 
 	}
-
-	/**
-	 * Permet de savoir si un son est un son de fond
-	 * 
-	 * @param name
-	 * @return
-	 */
-	public static boolean is_background(String name) {
-		// System.out.println(name);
-		return backgroundSounds.containsValue(name);
-	}
+	
+//   public static void replay() {
+//	      if (volume != Volume.MUTE) {
+//	         if (clip.isRunning())
+//	            clip.stop();   // Stop the player if it is still running
+//	         clip.setFramePosition(0); // rewind to the beginning
+//	         clip.start();     // Start playing
+//	      }
+//	   }
 
 }

@@ -64,9 +64,6 @@ public class GameView {
 			this.controller = controller;
 			canvas = new GameCanvas(controller);
 
-			SoundTool.initSoundTool(canvas); // INITIALISATION DE L OUTILS DE SON
-			SoundTool.playBackgroundMusic();
-
 			// creating the game canvas to render the game,
 			// that would be a part of the view in the MVC pattern
 

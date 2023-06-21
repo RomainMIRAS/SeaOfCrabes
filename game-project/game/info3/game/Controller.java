@@ -149,20 +149,12 @@ public class Controller implements GameCanvasListener {
 	// boolean m_expired;
 	@Override
 	public void endOfPlay(String name) {
-		if (gameModele != null && gameView != null) {
-			if (SoundTool.is_background(name))
-				SoundTool.playBackgroundMusic();
-		}
+		// NOT USED
 	}
 
 	@Override
 	public void expired() {
-		// will force a change of music, after 6s of play
-		// System.out.println("Forcing an ealy change of music");
-		// m_expired = true;
-		// game.loadMusic();
-		if (gameModele != null && gameView != null) {
-		}
+		// NOT USED
 	}
 	
 	public static boolean[] getBuffer() {
