@@ -7,6 +7,8 @@ import java.awt.event.KeyEvent;
 
 import info3.game.modele.GameModele;
 import info3.game.modele.Weapon;
+import info3.game.modele.MoveableEntityClass.CannonBall;
+import info3.game.modele.MoveableEntityClass.SpecificCannnonBall;
 
 public class UIBox extends UIComponent {
 
@@ -14,6 +16,7 @@ public class UIBox extends UIComponent {
 	private Color backgroundColor;
 	private UIImage image, playerImage;
 	private Weapon weapon;
+	private CannonBall boulet;
 
 	private static final Font FONT = new Font("TimesRoman", Font.PLAIN, 12);
 
@@ -32,6 +35,13 @@ public class UIBox extends UIComponent {
 		super(x, y, c, c);
 		image = im;
 		playerImage = p;
+	}
+
+	public UIBox(int c, CannonBall boulet, UIImage im) {
+		// TODO Auto-generated constructor stub
+		super(0, 0, c, c);
+		this.image = im;
+		this.boulet = boulet;
 	}
 
 	public Weapon getWeapon() {

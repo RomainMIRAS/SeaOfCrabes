@@ -14,6 +14,7 @@ import info3.game.modele.Weapon;
 import info3.game.modele.MoveableEntityClass.PiratePlayer;
 import info3.game.modele.MoveableEntityClass.BoatPlayer;
 import info3.game.modele.MoveableEntityClass.PiratePlayer;
+import info3.game.modele.MoveableEntityClass.SpecificCannnonBall;
 import info3.game.modele.MoveableEntityClass.Player;
 import info3.game.modele.MoveableEntityClass.Scythe;
 import info3.game.modele.MoveableEntityClass.Sword;
@@ -34,6 +35,7 @@ public class PlayingView extends View {
 	UIBarrePointDeVie barreVieMer, barreVieTerre;
 	UIBoxes cannonBallBox, boxPlayer1, boxPlayer2;
 	UIBox boxSword, boxScythe;
+	UIBox boxBoulet1, boxBoulet2, boxBoulet3, boxBoulet4;
 	UILabel labelTimer;
 
 	UIBox weaponPlayer1, weaponPlayer2;
@@ -53,11 +55,30 @@ public class PlayingView extends View {
 		barreVieMer = new UIBarreVieMer(0, 0);
 		labelTimer = new UILabel(windowWidth / 2, 35, "0'", FONT3, Color.black);
 
-		cannonBallBox = new UIBoxes((windowWidth - 100) / 2, windowHeight - 114);
-		boxSword = new UIBox(64, new Sword(), new UIImage(0, 0, "resources/img/Epee.png", 1F));
+		cannonBallBox = new UIBoxes((windowWidth) / 2 - 130, windowHeight - 114);
+		/*boxSword = new UIBox(64, new Sword(), new UIImage(0, 0, "resources/img/Epee.png", 1F));
 		boxScythe = new UIBox(64, Scythe.getInstance(), new UIImage(0, 0, "resources/img/Scythe.png", 1F));
+		*/
+		// Création premier type de Boulet
+		boxBoulet1 = new UIBox(64, new SpecificCannnonBall(100, 500, 100), new UIImage(0, 0, "assets/img/utilities/BouletDeCanon.png", 1F));
+		
+		// Création deuxième type de Boulet
+		boxBoulet2 = new UIBox(64, new SpecificCannnonBall(100, 500, 100), new UIImage(0, 0, "assets/img/utilities/BouletDeCanon.png", 1F));
+		
+		// Création deuxième type de Boulet
+		boxBoulet3 = new UIBox(64, new SpecificCannnonBall(100, 500, 100), new UIImage(0, 0, "assets/img/utilities/BouletDeCanon.png", 1F));
+		
+		// Création deuxième type de Boulet
+		boxBoulet4 = new UIBox(64, new SpecificCannnonBall(100, 500, 100), new UIImage(0, 0, "assets/img/utilities/BouletDeCanon.png", 1F));
+		
+		/*
 		cannonBallBox.addBox(boxSword);
 		cannonBallBox.addBox(boxScythe);
+		*/
+		cannonBallBox.addBox(boxBoulet1);
+		cannonBallBox.addBox(boxBoulet2);
+		cannonBallBox.addBox(boxBoulet3);
+		cannonBallBox.addBox(boxBoulet4);
 
 		attackSpeedBonusLabel = new UILabel(windowWidth - 375 + 30, 20, "0'", FONT4, Color.black);
 		damageBonusLabel = new UILabel(windowWidth - 300 + 30, 20, "0'", FONT4, Color.black);
@@ -210,7 +231,8 @@ public class PlayingView extends View {
 		}
 
 		cannonBallBox.paint(g);
-
+		
+		// Affichage de l'arme choisie par le joueur en jeu (en bas à droite de l'écran)
 		if (!GameModele.solo) {
 			boxPlayer1 = new UIBoxes(50, 602);
 			if (GameModele.player1.weapon.getName() == "Sword") {

@@ -145,5 +145,4 @@ public class UIBoxes extends UIComponent {
 		this.setWidth(widthCounter);
 		this.setHeight(heightCounter);
 	}
-
 }
